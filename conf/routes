@@ -1,3 +1,18 @@
 GET	/	controllers.HomeController.index
 
+GET	/todo	controllers.HomeController.todo
+
+# Redirects to https://www.playframework.com/ with 303 See Other
+GET   /about      controllers.Default.redirect(to = "https://www.playframework.com/")
+
+# Responds with 404 Not Found
+GET   /notfound     controllers.Default.notFound
+
+# Responds with 500 Internal Server Error
+GET   /error    controllers.Default.error
+
+# Responds with 501 Not Implemented
+GET   /todo      controllers.Default.todo
+
+
 GET  /assets/*file        controllers.Assets.at(path="/public", file)
