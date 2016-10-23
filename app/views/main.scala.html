@@ -4,18 +4,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>@title</title>
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
     <script src="@routes.Assets.at("lib/react/dist/react.js")"></script>
     <script src="@routes.Assets.at("lib/react-dom/dist/react-dom.js")"></script>
+    <script type="text/babel" src="@routes.Assets.at("javascripts/main.js")"></script>
+    <script type="text/babel" src="@routes.Assets.at("javascripts/helloworld.js")"></script>
     <script src="https://unpkg.com/babel-core@@5.8.38/browser.min.js"></script>
   </head>
   <body>
     <div id="example"></div>
-    <script type="text/babel">
-      ReactDOM.render(
-      <h1>Hello, world!</h1>,
-      document.getElementById('example')
-      );
-    </script>
+    <div id="errors"></div>
+    <div id="container"></div>
     <section class="content">@content</section>
   </body>
 </html>
