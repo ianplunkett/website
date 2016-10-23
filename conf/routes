@@ -1,6 +1,5 @@
-GET	/	controllers.HomeController.index
-
-GET	/todo	controllers.HomeController.todo
+GET	/		controllers.HomeController.index
+GET	/session	controllers.HomeController.session
 
 # Redirects to https://www.playframework.com/ with 303 See Other
 GET   /about      controllers.Default.redirect(to = "https://www.playframework.com/")
