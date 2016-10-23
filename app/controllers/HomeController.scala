@@ -5,7 +5,7 @@ import play.api.mvc._
 class HomeController extends Controller {
 
   def index = Action {
-    Ok("It works!").withSession(
+    Ok(views.html.home.index()).withSession(
     "connected" -> "ian.plunkett@gmail.com")
   }
 
