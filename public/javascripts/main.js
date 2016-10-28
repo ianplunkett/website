@@ -1,123 +1,123 @@
 function Square(props) {
     return (
-	    <button className="square" onClick={() => props.onClick()}>
-	    {props.value}
-	</button>
+            <button className="square" onClick={() => props.onClick()}>
+            {props.value}
+        </button>
     );
 }
 
 class Board extends React.Component {
-    constructor() {
-	super();
-	this.state = {
-	    squares: Array(9).fill(null),
-	    xIsNext: true,
-	};
-    }
-    
+
     renderSquare(i) {
-	return <Square value={this.props.squares[i]} onClick={() => this.props.handleClick(i)} />;
+        return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
     }
 
     render() {
 
-	return (
-		<div>
-		<div className="status">{status}</div>
-		<div className="board-row">
-		{this.renderSquare(0)}
+        return (
+                <div>
+                <div className="status">{status}</div>
+                <div className="board-row">
+                {this.renderSquare(0)}
             {this.renderSquare(1)}
             {this.renderSquare(2)}
             </div>
-		<div className="board-row">
-		{this.renderSquare(3)}
+                <div className="board-row">
+                {this.renderSquare(3)}
             {this.renderSquare(4)}
             {this.renderSquare(5)}
             </div>
-		<div className="board-row">
-		{this.renderSquare(6)}
+                <div className="board-row">
+                {this.renderSquare(6)}
             {this.renderSquare(7)}
             {this.renderSquare(8)}
             </div>
-		</div>
-	);
+                </div>
+        );
     }
 }
 
 class Game extends React.Component {
 
     constructor() {
-	super();
-	this.state = {
-	    history: [{
-		squares: Array(9).fill(null)
-	    }],
-	    xIsNext: true
-	};
+        super();
+        this.state = {
+            history: [{
+                squares: Array(9).fill(null)
+            }],
+            xIsNext: true
+        };
     }
 
     handleClick(i) {
-	const squares = this.state.squares.slice();
+	var history = this.state.history;
+	var current = history[history.length - 1];
+	
+        const squares = current.squares.slice();
 
-	if (calculateWinner(squares) || squares[i]) {
-	    return;
-	}
-	squares[i] = this.state.xIsNext ? 'X' : 'O';
-	this.setState({
-	    squares: squares,
-	    xIsNext: !this.state.xIsNext,
-	});
+        if (calculateWinner(squares) || squares[i]) {
+            return;
+        }
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+	    history: history.concat([{
+		squares: squares
+	    }]),
+            xIsNext: !this.state.xIsNext,
+        });
     }
 
 
     
     render() {
-	const winner = calculateWinner(this.state.squares);
-	let status;
+	const history = this.state.history;
+	const current = history[history.length - 1];
+        const winner = calculateWinner(current.squares);
 
-	if(winner) {
-	    status = 'Winner: ' + winner;
-	} else {
-	    status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-	}
+        let status;
+        if(winner) {
+            status = 'Winner: ' + winner;
+        } else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
 
-	return (
-		<div className="game">
-		<div className="game-board">
-		<Board squares={this.state.squares[i]} onClick={() => this.handleClick(i)}/>
-		</div>
-		<div className="game-info">
-		<div>{/* status */}</div>
-		<ol>{/* TODO */}</ol>
-		</div>
-		</div>
-	);
+        return (
+                <div className="game">
+                <div className="game-board">
+                <Board squares={current.squares} onClick={(i) => this.handleClick(i)}/>
+                </div>
+                <div className="game-info">
+                <div>{/* status */}</div>
+                <ol>{/* TODO */}</ol>
+                </div>
+                </div>
+        );
     }
 }
 
 // ========================================
 
 ReactDOM.render(
-	<Game />,
+        <Game />,
     document.getElementById('container')
 );
 
 function calculateWinner(squares) {
     const lines = [
-	[0, 1, 2],
-	[3, 4, 5],
-	[6, 7, 8],
-	[0, 3, 6],
-	[1, 4, 7],
-	[2, 5, 8],
-	[0, 4, 8],
-	[2, 4, 6],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
     ];
     for (let i = 0; i < lines.length; i++) {
-	const [a, b, c] = lines[i];
-	if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-	    return squares[a];
-	}
+        const [a, b, c] = lines[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+        }
     }
     return null;
 }
@@ -128,13 +128,13 @@ window.addEventListener('mousedown', function(e) {
 });
 window.addEventListener('keydown', function(e) {
     if (e.keyCode === 9) {
-	document.body.classList.add('kbd-navigation');
-	document.body.classList.remove('mouse-navigation');
+        document.body.classList.add('kbd-navigation');
+        document.body.classList.remove('mouse-navigation');
     }
 });
 window.addEventListener('click', function(e) {
     if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
-	e.preventDefault();
+        e.preventDefault();
     }
 });
 window.onerror = function(message, source, line, col, error) {
@@ -144,8 +144,8 @@ window.onerror = function(message, source, line, col, error) {
 };
 console.error = (function(old) {
     return function error() {
-	errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';
-	errors.style.display = '';
-	old.apply(this, arguments);
+        errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';
+        errors.style.display = '';
+        old.apply(this, arguments);
     }
 })(console.error);
